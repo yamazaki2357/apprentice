@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  app:
+    build: .
+    image: ubuntu-image
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/linux-study
