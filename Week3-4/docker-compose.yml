@@ -7,3 +7,5 @@ services:
     stdin_open: true
     volumes:
       - .:/linux-study
+    environment:
+      - PASSPHRASE_ENV_VAR=${HOST_PASSPHRASE_ENV_VAR}

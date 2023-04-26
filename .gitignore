@@ -1,0 +1,5 @@
+# Ignore all keys directories
+**/keys/
+
+# GnuPG keys
+*.gpg

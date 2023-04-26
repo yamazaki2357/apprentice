@@ -11,6 +11,7 @@ RUN apt-get update \
     tar \
     grep \
     sudo \
+    gnupg \
     man-db manpages-ja manpages-ja-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata 
 RUN locale-gen ja_JP.UTF-8
