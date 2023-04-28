@@ -33,6 +33,9 @@
 ### MySQLにrootユーザーでログイン
 ```mysql -u root -p```
 
+### MySQLにmyuserユーザーでログイン
+```mysql -u myuser -p```
+
 <details>
 <summary>データベースの作成、表示、指定、削除</summary>
 <p>
@@ -48,6 +51,67 @@
 
 ### データベースの削除
 ```DROP DATABASE database_name;```
+
+</p>
+</details>
+
+<details>
+<summary>ユーザーの作成、表示、権限付与、権限適用、権限確認</summary>
+<p>
+
+### ユーザーの作成
+```CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypassword';```
+
+### ユーザーの表示
+```SELECT USER, HOST FROM mysql.user;```
+
+### ユーザーに権限を付与
+```GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'localhost';```
+
+### 権限のリロード
+```FLUSH PRIVILEGES;```
+
+### ユーザー権限の確認
+```SHOW GRANTS FOR 'myuser'@'localhost';```
+
+### ユーザーの削除
+```DROP USER 'myuser'@'localhost';```
+
+</p>
+</details>
+
+<details>
+<summary>テーブルの作成、表示、削除、カラムの追加、表示、削除</summary>
+<p>
+
+### 指定しているデータベースの確認SHOs
+```SELECT DATABASE();```
+
+### テーブルの作成
+```sql
+CREATE TABLE users (
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    gender ENUM('male', 'female', 'other') NOT NULL,
+    hometown VARCHAR(100) NOT NULL,
+    PRIMARY KEY (username)
+);
+```
+### テーブルの表示
+```SHOW TABLES;```
+
+### テーブルの削除
+```DROP TABLE table_name;```
+
+### カラムの追加
+```ALTER TABLE table_name ADD COLUMN column_name datatype;```
+
+### カラムの表示
+```DESCRIBE table_name;```
+
+### カラムの削除
+```ALTER TABLE table_name DROP COLUMN column_name;```
 
 </p>
 </details>
