@@ -33,6 +33,9 @@
 ### MySQLにrootユーザーでログイン
 ```mysql -u root -p```
 
+### MySQLにmyuserユーザーでログイン
+```mysql -u myuser -p```
+
 <details>
 <summary>データベースの作成、表示、指定、削除</summary>
 <p>
@@ -48,6 +51,31 @@
 
 ### データベースの削除
 ```DROP DATABASE database_name;```
+
+</p>
+</details>
+
+<details>
+<summary>ユーザーの作成、表示、権限付与、権限適用、権限確認</summary>
+<p>
+
+### ユーザーの作成
+```CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypassword';```
+
+### ユーザーの表示
+```SELECT USER, HOST FROM mysql.user;```
+
+### ユーザーに権限を付与
+```GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'localhost';```
+
+### 権限のリロード
+```FLUSH PRIVILEGES;```
+
+### ユーザー権限の確認
+```SHOW GRANTS FOR 'myuser'@'localhost';```
+
+### ユーザーの削除
+```DROP USER 'myuser'@'localhost';```
 
 </p>
 </details>
