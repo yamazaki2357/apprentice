@@ -1,5 +1,8 @@
 ## Docker
----
+<details>
+<summary>イメージのビルド、作成と起動、コンテナ内での操作、停止、起動、削除</summary>
+<p>
+
 ### イメージのビルド
 ``` docker build -t mysql-image .```
 ### コンテナの作成と起動
@@ -8,22 +11,43 @@
 ```docker exec -it mysql-container bash```
 ### コンテナ停止
 ```docker stop mysql-container```
-### コンテナの再起動
-```docker restart mysql-container```
+### コンテナの起動
+```docker start mysql-container```
 ### コンテナの削除
 ```docker rm mysql-container```
+</p>
+</details>
+
+## docker compose
+
+### コンテナを起動する
+```docker compose up -d```
+
+### コンテナ内で操作する
+```docker compose exec mysql bash```
+
+### コンテナを停止する
+```docker compose down```
 
 ## MySQL
----
-### MySQLにログイン
-```mysql -u myuser -p```
-### MySQLのバージョン確認
-```SELECT VERSION();```
-### MySQLのデータベース一覧確認
+### MySQLにrootユーザーでログイン
+```mysql -u root -p```
+
+<details>
+<summary>データベースの作成、表示、指定、削除</summary>
+<p>
+
+### データベースの作成
+```CREATE DATABASE database_name;```
+
+### データベースの表示
 ```SHOW DATABASES;```
-### MySQLのデータベースの中身確認
-```USE mydb;```
-### MySQLのテーブル一覧確認
-```SHOW TABLES;```
-### MySQLのテーブルの中身確認
-```SELECT * FROM mytable;```
+
+### データベースの指定
+```USE database_name;```
+
+### データベースの削除
+```DROP DATABASE database_name;```
+
+</p>
+</details>
