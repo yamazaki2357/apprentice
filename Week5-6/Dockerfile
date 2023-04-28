@@ -33,7 +33,3 @@ EXPOSE 3306
 
 # MySQLサーバーを起動するコマンド
 CMD ["mysqld"]
-
-
-
-
