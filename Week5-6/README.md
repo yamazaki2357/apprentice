@@ -30,17 +30,24 @@
 ```docker compose down```
 
 ## MySQL
-
-### MySQLにmyuserでログイン
-```mysql -u myuser -p```
-### MySQLにrootでログイン
+### MySQLにrootユーザーでログイン
 ```mysql -u root -p```
 
 <details>
-<summary>データベースの作成、表示、指定、削除、再作成</summary>
+<summary>データベースの作成、表示、指定、削除</summary>
 <p>
 
+### データベースの作成
+```CREATE DATABASE database_name;```
 
+### データベースの表示
+```SHOW DATABASES;```
+
+### データベースの指定
+```USE database_name;```
+
+### データベースの削除
+```DROP DATABASE database_name;```
 
 </p>
 </details>
