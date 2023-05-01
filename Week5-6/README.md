@@ -153,3 +153,43 @@ CREATE TABLE users (
 
 </p>
 </details>
+
+<details>
+<summary>データの絞り込み</summary>
+<p>
+
+### 指定した行数のみ取得
+```SELECT * FROM employees LIMIT 10;```
+
+### 等しいデータの絞り込み
+```SELECT * FROM employees WHERE gender = 'F' LIMIT 10;```
+
+### 等しくないデータの絞り込み
+```SELECT * FROM employees WHERE gender != 'F' LIMIT 10;```
+
+### より大きいデータの絞り込み
+```SELECT * FROM employees WHERE birth_date > '1960-01-01' LIMIT 10;```
+
+### あいまいな条件の絞り込み
+ ```SELECT * FROM employees WHERE first_name LIKE '%vi%' LIMIT 10;```
+
+### 特定の範囲の絞り込み
+```SELECT * FROM employees WHERE birth_date BETWEEN '1960-01-01' AND '1960-01-31' LIMIT 10;```
+
+### かつ
+```SELECT * FROM employees WHERE first_name = 'Mary' AND gender = 'F';```
+
+### または
+``` SELECT * FROM employees WHERE first_name = 'Mary' OR last_name = 'Peck' LIMIT 10;```
+
+### 含まれる
+```SELECT * FROM employees WHERE emp_no IN (10011, 10021, 10031);```
+
+### 従業員番号
+```SELECT first_name, last_name FROM employees WHERE emp_no = 20000;```
+
+### 誕生日
+```SELECT * FROM employees WHERE birth_date LIKE '1959-01-%';```
+
+</p>
+</details>
