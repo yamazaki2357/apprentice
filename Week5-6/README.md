@@ -220,3 +220,61 @@ CREATE TABLE users (
 
 </p>
 </details>
+
+<details>
+<summary>データのグルーピング</summary>
+<p>
+
+### グルーピング
+```sql
+SELECT emp_no, COUNT(*)
+FROM salaries
+GROUP BY emp_no
+LIMIT 10;
+```
+
+### グルーピングと集計関数
+```sql
+SELECT emp_no, MIN(salary), MAX(salary)
+FROM salaries
+WHERE emp_no BETWEEN 10001 AND 10010
+GROUP BY emp_no
+ORDER BY emp_no ASC;
+```
+
+### グルーピングと集計関数2
+```sql
+SELECT emp_no, MIN(from_date), MAX(to_date)
+FROM salaries
+WHERE emp_no BETWEEN 10001 AND 10010
+GROUP BY emp_no;
+```
+
+### 絞り込み
+```sql
+SELECT emp_no, MAX(salary)
+FROM salaries
+GROUP BY emp_no
+HAVING MAX(salary) > 140000;
+```
+
+### 最小給与
+```sql
+SELECT emp_no, MIN(salary)
+FROM salaries
+WHERE emp_no BETWEEN 10001 AND 10100
+GROUP BY emp_no
+HAVING MIN(salary) < 40000;
+```
+
+### 最終勤務日
+```sql
+SELECT emp_no, MAX(to_date)
+FROM salaries
+WHERE emp_no BETWEEN 10001 AND 10100
+GROUP BY emp_no
+HAVING MAX(to_date) < '9999-01-01';
+```
+
+</p>
+</details>
