@@ -84,7 +84,7 @@
 <summary>テーブルの作成、表示、削除、カラムの追加、表示、削除</summary>
 <p>
 
-### 指定しているデータベースの確認SHOs
+### 指定しているデータベースの確認
 ```SELECT DATABASE();```
 
 ### テーブルの作成
@@ -108,10 +108,29 @@ CREATE TABLE users (
 ```ALTER TABLE table_name ADD COLUMN column_name datatype;```
 
 ### カラムの表示
-```DESCRIBE table_name;```
+```DESCRIBE users;```
 
 ### カラムの削除
 ```ALTER TABLE table_name DROP COLUMN column_name;```
+
+</p>
+</details>
+
+<details>
+<summary>データの登録・検索・更新・削除</summary>
+<p>
+
+### データの登録
+```INSERT INTO users (username, email, age, gender, hometown) VALUES('JohnDoe', 'hoge@example.com', 30, 'male', 'New York');```
+
+### データの検索
+```SELECT * FROM users;```
+
+### データの更新
+```UPDATE users SET age = 35 WHERE username = 'John';```
+
+### データの削除
+```DELETE FROM users;```
 
 </p>
 </details>
