@@ -193,3 +193,20 @@ CREATE TABLE users (
 
 </p>
 </details>
+
+
+<details>
+<summary>検索結果の並び替え</summary>
+<p>
+
+### 昇順の並び替え
+```SELECT * FROM employees ORDER BY birth_date ASC LIMIT 10;```
+
+### 降順の並び替え
+```SELECT * FROM employees ORDER BY birth_date DESC LIMIT 10;```
+
+### 複数条件の並び替え
+```SELECT * FROM employees ORDER BY birth_date DESC, hire_date DESC LIMIT 30;```
+
+</p>
+</details>
