@@ -134,3 +134,22 @@ CREATE TABLE users (
 
 </p>
 </details>
+
+<details>
+<summary>データの検索</summary>
+<p>
+
+### 全カラムの取得
+```SELECT * FROM dept_manager;```
+
+### カラムの選択
+```SELECT emp_no FROM dept_manager;```
+
+### カラム名の別名
+```SELECT emp_no AS employee_no FROM dept_manager;```
+
+### 重複行の削除
+```SELECT DISTINCT dept_no FROM dept_manager;```
+
+</p>
+</details>

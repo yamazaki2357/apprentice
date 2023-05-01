@@ -13,6 +13,7 @@ services:
       - "3306:3306"
     volumes:
       - data-volumes:/var/lib/mysql
+      - ./test_db:/test_db
 
 volumes:
   data-volumes:
