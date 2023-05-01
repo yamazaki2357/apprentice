@@ -11,3 +11,8 @@ services:
       MYSQL_PASSWORD: mypassword
     ports:
       - "3306:3306"
+    volumes:
+      - data-volumes:/var/lib/mysql
+
+volumes:
+  data-volumes:
