@@ -1,23 +1,3 @@
-## Docker
-<details>
-<summary>イメージのビルド、作成と起動、コンテナ内での操作、停止、起動、削除</summary>
-<p>
-
-### イメージのビルド
-``` docker build -t mysql-image .```
-### コンテナの作成と起動
-``` docker run --name mysql-container -d -p 3306:3306 mysql-image```
-### コンテナ内での操作
-```docker exec -it mysql-container bash```
-### コンテナ停止
-```docker stop mysql-container```
-### コンテナの起動
-```docker start mysql-container```
-### コンテナの削除
-```docker rm mysql-container```
-</p>
-</details>
-
 ## docker compose
 
 ### コンテナを起動する
@@ -194,7 +174,6 @@ CREATE TABLE users (
 </p>
 </details>
 
-
 <details>
 <summary>検索結果の並び替え</summary>
 <p>
@@ -207,6 +186,37 @@ CREATE TABLE users (
 
 ### 複数条件の並び替え
 ```SELECT * FROM employees ORDER BY birth_date DESC, hire_date DESC LIMIT 30;```
+
+</p>
+</details>
+
+<details>
+<summary>データの集計</summary>
+<p>
+
+### 列の合計値
+```SELECT SUM(salary) FROM salaries;```
+
+### 列の平均値
+```SELECT AVG(salary) FROM salaries;```
+
+### 四捨五入
+```SELECT ROUND(AVG(salary)) FROM salaries;```
+
+### 列の最大値
+```SELECT MAX(salary) FROM salaries;```
+
+### 列の最小値
+```SELECT MIN(salary) FROM salaries;```
+
+### 行数
+```SELECT COUNT(*) FROM salaries;```
+
+### 絞り込みとの組み合わせ
+```SELECT MAX(salary) FROM salaries WHERE from_date = '1986-06-26';```
+
+### 少数第1桁
+```SELECT ROUND(AVG(salary),1) FROM salaries WHERE to_date = '1991-06-26';```
 
 </p>
 </details>
