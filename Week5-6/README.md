@@ -278,3 +278,56 @@ HAVING MAX(to_date) < '9999-01-01';
 
 </p>
 </details>
+
+<details>
+<summary>テーブルの結合</summary>
+<p>
+
+### 内部結合
+```sql
+SELECT *
+FROM dept_manager
+INNER JOIN employees
+ON dept_manager.emp_no = employees.emp_no;
+```
+
+### 列の選択
+```sql
+SELECT dept_no, dept_manager.emp_no, first_name, last_name
+FROM dept_manager
+INNER JOIN employees
+ON dept_manager.emp_no = employees.emp_no;
+```
+
+### 複数の内部結合
+```sql
+SELECT dept_manager.dept_no, dept_name, dept_manager.emp_no, first_name, last_name
+FROM dept_manager
+INNER JOIN employees
+ON dept_manager.emp_no = employees.emp_no
+INNER JOIN departments
+ON dept_manager.dept_no = departments.dept_no;
+```
+
+### 絞り込み
+```sql
+SELECT dept_manager.dept_no, dept_name, dept_manager.emp_no, first_name, last_name
+FROM dept_manager
+INNER JOIN employees
+ON dept_manager.emp_no = employees.emp_no
+INNER JOIN departments
+ON dept_manager.dept_no = departments.dept_no
+WHERE dept_manager.to_date = '9999-01-01';
+```
+
+### 給与
+```sql
+SELECT employees.emp_no, first_name, last_name, from_date, to_date, salary
+FROM employees
+INNER JOIN salaries
+ON employees.emp_no = salaries.emp_no
+WHERE employees.emp_no BETWEEN 10001 AND 10010;
+```
+
+</p>
+</details>
