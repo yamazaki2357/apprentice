@@ -278,3 +278,243 @@ HAVING MAX(to_date) < '9999-01-01';
 
 </p>
 </details>
+
+<details>
+<summary>テーブルの結合</summary>
+<p>
+
+### 内部結合
+```sql
+SELECT *
+FROM dept_manager
+INNER JOIN employees
+ON dept_manager.emp_no = employees.emp_no;
+```
+
+### 列の選択
+```sql
+SELECT dept_no, dept_manager.emp_no, first_name, last_name
+FROM dept_manager
+INNER JOIN employees
+ON dept_manager.emp_no = employees.emp_no;
+```
+
+### 複数の内部結合
+```sql
+SELECT dept_manager.dept_no, dept_name, dept_manager.emp_no, first_name, last_name
+FROM dept_manager
+INNER JOIN employees
+ON dept_manager.emp_no = employees.emp_no
+INNER JOIN departments
+ON dept_manager.dept_no = departments.dept_no;
+```
+
+### 絞り込み
+```sql
+SELECT dept_manager.dept_no, dept_name, dept_manager.emp_no, first_name, last_name
+FROM dept_manager
+INNER JOIN employees
+ON dept_manager.emp_no = employees.emp_no
+INNER JOIN departments
+ON dept_manager.dept_no = departments.dept_no
+WHERE dept_manager.to_date = '9999-01-01';
+```
+
+### 給与
+```sql
+SELECT employees.emp_no, first_name, last_name, from_date, to_date, salary
+FROM employees
+INNER JOIN salaries
+ON employees.emp_no = salaries.emp_no
+WHERE employees.emp_no BETWEEN 10001 AND 10010;
+```
+
+</p>
+</details>
+
+<details>
+<summary>サブクエリ</summary>
+<p>
+
+### サブクエリ
+```sql
+SELECT emp_no, salary
+FROM salaries
+WHERE salary > (SELECT AVG(salary) FROM salaries)
+AND emp_no BETWEEN 10001 AND 10010;
+```
+
+### 重複なし
+```sql
+SELECT DISTINCT emp_no
+FROM salaries
+WHERE salary > (SELECT AVG(salary) * 2 FROM salaries);
+```
+
+### 最大給与
+```sql
+SELECT emp_no, MAX(salary)
+FROM salaries
+WHERE salary > (SELECT AVG(salary) FROM salaries)
+AND emp_no BETWEEN 10001 AND 10010
+GROUP BY emp_no;
+```
+
+</p>
+</details>
+
+<details>
+<summary>条件分岐</summary>
+<p>
+
+### CASE
+```sql
+SELECT emp_no, to_date,
+CASE WHEN to_date = '9999-01-01' THEN 'employed'
+ELSE 'unemployed'
+END AS status
+FROM dept_emp
+WHERE emp_no BETWEEN 10100 AND 10200;
+```
+
+### 年代
+```sql
+SELECT emp_no, birth_date,
+CASE WHEN birth_date BETWEEN '1950-01-01' AND '1959-12-31' THEN '50s'
+WHEN birth_date BETWEEN '1960-01-01' AND '1969-12-31' THEN '60s'
+END AS decade
+FROM employees
+WHERE emp_no BETWEEN 10001 AND 10050;
+```
+
+### 年代ごとの最大給与
+```sql
+SELECT emp_no, birth_date,
+CASE WHEN birth_date BETWEEN '1950-01-01' AND '1959-12-31' THEN '50s'
+WHEN birth_date BETWEEN '1960-01-01' AND '1969-12-31' THEN '60s'
+END AS decade
+FROM employees
+WHERE emp_no BETWEEN 10001 AND 10050
+GROUP BY emp_no;
+```
+
+</p>
+</details>
+
+<details>
+<summary>テーブル</summary>
+
+[label](http://www.plantuml.com/plantuml/png/SYWkIImgAStDuL9CIKtBp4jL24bCoadLo4lCJTL9IIrErbH8paaiBbO02IWa5YieWGIL56ni53H2T9JTt1o1G5F1pWwkFw0eCpUngD8xjLAZGbF19Za_9x_8gYWrnQx2HX_CGIXroozApKpFGrMQb5EQ2cYb_5KQ288mtkzJBDk9faXhPI62Y68VxBJr1SJYTZ519KQKYmasdY3Hd8H8WY86NsRSFVCMxZd9AZDSWc0JilFDVBzl_t2_UWNc6ISTsxi5KmKp0jC4aov9nOjgGHu8AHSbIkkhihAziUChfPB_mQ8zh-V_hzy-7vwok6iRBtu99lasIK5xmsCmZw1VnU4KR-EglOm8dXS37YM2noBYFzuJTpFw0O1ESoCz1DFrTeJ4LOuaFOHDL1-2RcvsWdaz1LklhFa8HUbGneGXZ1lSksQDq4EHur2Q-96h3-voqkQkxbnRXsLsykm64MMxrbasxFC4NE8voBRvOOGySNzSQ-IFejxoRo7FCFU8fTfIVbggJINvs_lR_8msmKzRgZ9EUeEYan1S8CDb7flJo01UvZzmbWk3GzIRNXFe2zlGsL47eZReKo5MzlPtyu_Z5m00)
+
+<p>
+
+テーブル：顧客テーブル（customers）
+
+| カラム名 | データ型    | NULL | キー      | 初期値 | AUTO_INCREMENT |
+|---------|-------------|------|-----------|--------|----------------|
+| customer_id | BIGINT(20) |      | PRIMARY   |        | YES            |
+| customer_name | VARCHAR(255) |      |           |        |                |
+| phone_number | VARCHAR(20) |      |           |        |                |
+| email | VARCHAR(255) |      |           |        |                |
+ 
+テーブル：商品テーブル（items）
+
+| カラム名 | データ型    | NULL | キー      | 初期値 | AUTO_INCREMENT |
+|---------|-------------|------|-----------|--------|----------------|
+| item_id | BIGINT(20) |      | PRIMARY   |        | YES            |
+| item_name | VARCHAR(255) |      |           |        |                |
+| price | INT |      |           |        |                |
+
+テーブル：カテゴリーテーブル（categories）
+
+| カラム名 | データ型    | NULL | キー      | 初期値 | AUTO_INCREMENT |
+|---------|-------------|------|-----------|--------|----------------|
+| category_id | BIGINT(20) |      | PRIMARY   |        | YES            |
+| category_name | VARCHAR(255) |      |           |        |                |
+
+テーブル：商品カテゴリーテーブル（item_categories）
+
+| カラム名 | データ型    | NULL | キー      | 初期値 | AUTO_INCREMENT | 外部キー制約 |
+|---------|-------------|------|-----------|--------|----------------|---------------|
+| item_id | BIGINT(20) |      | PRIMARY   |        | YES            | 外部キー(item_id) 参照元：items(item_id) |
+| category_id | BIGINT(20) |      | PRIMARY   |        | YES            | 外部キー(category_id) 参照元：categories(category_id) |
+
+テーブル：注文テーブル（orders）
+
+| カラム名 | データ型    | NULL | キー      | 初期値 | AUTO_INCREMENT | 外部キー制約 |
+|---------|-------------|------|-----------|--------|----------------|---------------|
+| order_id | BIGINT(20) |      | PRIMARY   |        | YES            |                |
+| customer_id | BIGINT(20) |      |           |        |                | 外部キー(customer_id) 参照元：customers(customer_id) |
+| order_date | DATETIME |      |           |        |                |
+| order_status | VARCHAR(20) |      |           |        |                |
+
+テーブル：注文明細テーブル（order_details）
+
+| カラム名 | データ型    | NULL | キー      | 初期値 | AUTO_INCREMENT | 外部キー制約 |
+|---------|-------------|------|-----------|--------|----------------|---------------|
+| order_id | BIGINT(20) |      | PRIMARY   |        | YES            | 外部キー(order_id) 参照元：注文テーブル(orders) |
+| item_id | BIGINT(20) |      | PRIMARY   |        | YES            | 外部キー(item_id) 参照元：商品テーブル(items) |
+| quantity | INT |      |           |        |                | |
+| unit_price | INT |      |           |        |                | |
+
+</p>
+</details>
+
+<details>
+<summary>インデックスを設定できる</summary>
+<p>
+
+### インデックス設定前
+```sql
+mysql> EXPLAIN ANALYZE SELECT * FROM employees WHERE birth_date = '1961-08-03';
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                                                                                                                                                    |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| -> Filter: (employees.birth_date = DATE'1961-08-03')  (cost=29434.75 rows=29203) (actual time=11.506..89.033 rows=67 loops=1)
+    -> Table scan on employees  (cost=29434.75 rows=292025) (actual time=0.109..73.749 rows=300024 loops=1)
+ |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.09 sec)
+```
+
+### インデックスの作成
+```sql
+CREATE INDEX idx_birth_date ON employees (birth_date);
+```
+### インデックスの確認
+```sql
+mysql> SHOW INDEXES FROM employees;
++-----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table     | Non_unique | Key_name       | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++-----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| employees |          0 | PRIMARY        |            1 | emp_no      | A         |      292025 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| employees |          1 | idx_birth_date |            1 | birth_date  | A         |        4770 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++-----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.02 sec) 
+```
+
+### インデックス設定後
+```sql
+mysql> EXPLAIN ANALYZE SELECT * FROM employees WHERE birth_date = '1961-08-03';
++---------------------------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                                                           |
++---------------------------------------------------------------------------------------------------------------------------------------------------+
+| -> Index lookup on employees using idx_birth_date (birth_date=DATE'1961-08-03')  (cost=23.45 rows=67) (actual time=2.969..2.996 rows=67 loops=1)
+ |
++---------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.01 sec)
+```
+### インデックスの削除
+```sql
+DROP INDEX idx_birth_date ON employees;
+```
+
+### ベストプラクティス
+- 頻繁に検索されるカラムに対してインデックスを作成する
+- 大きなテーブルに対しては、インデックスの種類を適切に選択する
+- インデックスを適切にメンテナンスする
+- インデックスを過剰に作成しない
+
+
+</p>
+</details>
