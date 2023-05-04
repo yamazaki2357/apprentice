@@ -1,0 +1,16 @@
+INSERT INTO episode_table (episode_number, episode_title, episode_description, video_length, release_date, views, season_id, program_id) VALUES
+(1, 'Episode 1: The Beginning', 'This is the first episode of our new show!', '00:30:00', '2022-01-01', 1000, 1, 1),
+(2, 'Episode 2: The Adventure Continues', 'Join us for more thrilling adventures!', '00:45:00', '2022-01-08', 1500, 1, 1),
+(3, 'Episode 3: The Mystery Unfolds', 'Will our heroes solve the mystery?', '00:30:00', '2022-01-15', 2000, 1, 1),
+(4, 'Episode 4: The Plot Thickens', 'Things are getting more complicated!', '00:45:00', '2022-01-22', 2500, 1, 1),
+(5, 'Episode 5: The Twist', 'You won\'t believe what happens next!', '00:30:00', '2022-01-29', 3000, 1, 1),
+(6, 'Episode 6: The Final Battle', 'The fate of the world hangs in the balance!', '01:00:00', '2022-02-05', 3500, 1, 1),
+(7, 'Episode 1: A New Beginning', 'Join us for a brand new season of our hit show!', '00:30:00', '2022-02-12', 4000, 2, 1),
+(8, 'Episode 2: The Return of the Villain', 'Our heroes face their greatest challenge yet!', '00:45:00', '2022-02-19', 4500, 2, 1),
+(9, 'Episode 3: The Secret of the Artefact', 'What is the mysterious artefact and why is everyone after it?', '00:30:00', '2022-02-26', 5000, 2, 1),
+(10, 'Episode 4: The Hunt Begins', 'The race is on to find the artefact!', '00:45:00', '2022-03-05', 5500, 2, 1),
+(11, 'Episode 5: The Trap', 'Our heroes fall into a trap!', '00:30:00', '2022-03-12', 6000, 2, 1),
+(12, 'Episode 6: The Final Showdown', 'Who will emerge victorious?', '01:00:00', '2022-03-19', 6500, 2, 1),
+(13, 'Episode 1: The Next Generation', 'A new group of heroes take the stage!', '00:30:00', '2022-03-26', 7000, 1, 2),
+(14, 'Episode 2: The Training Begins', 'Our new heroes begin their training!', '00:45:00', '2022-04-02', 7500, 1, 2),
+(15, 'Episode 3: The First Mission', 'Our new heroes go on their first mission!', '00:30:00', '2022-03-26', 7000, 1, 2);
