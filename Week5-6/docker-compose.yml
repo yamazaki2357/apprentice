@@ -4,6 +4,7 @@ services:
   mysql:
     build: .
     restart: always
+    working_dir: /mysql-study
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: mydb
@@ -14,6 +15,7 @@ services:
     volumes:
       - data-volumes:/var/lib/mysql
       - ./test_db:/test_db
+      - ./mysql-study:/mysql-study
 
 volumes:
   data-volumes:
