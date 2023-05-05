@@ -4,6 +4,7 @@ services:
   mysql:
     build: .
     restart: always
+    working_dir: /mysql-study
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: mydb

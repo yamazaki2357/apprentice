@@ -1,6 +1,6 @@
 # インターネットTV
 
-## テーブル設計
+## ステップ1：テーブル設計
 
 <details>
 <summary>テーブル設計</summary>
@@ -90,6 +90,12 @@
 </p>
 </details>
 
+## ステップ2：テーブルを構築し、データを入れる手順
+
+<details>
+<summary>1. mysqlの中に入る</summary>
+<p>
+
 Dockerを起動する
 ```docker compose up -d```
 
@@ -97,7 +103,14 @@ Dockerコンテナの中に入る
 ```docker compose exec mysql bash```
 
 mysqlの中に入る  
-```mysql -u myuser -pmypassword```
+```mysql -u myuser -p```
+
+</p>
+</details>
+
+<details>
+<summary>2. データベースを作成する</summary>
+<p>
 
 データベースの表示  
 ```SHOW DATABASES;```
@@ -137,8 +150,15 @@ mysqlの中に入る
 1 row in set (0.00 sec)
 ```
 
+</p>
+</details>
+
+<details>
+<summary>3. テーブルを作成する</summary>
+<p>
+
 テーブルの作成  
-(CREATE TABLE文ごとにコピペ)
+(CREATE TABLE文ごとにコピペして実行する。この例では7回)
 ```sql
 CREATE TABLE channel_table (
     channel_id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
@@ -196,8 +216,7 @@ CREATE TABLE program_genre_table (
     FOREIGN KEY (genre_id) REFERENCES genre_table(genre_id)
 );
 ```
-
-作成されたかどうか確認  
+作成されたかどうか確認する  
 ```SHOW TABLES;```
 ```sql
 mysql> SHOW TABLES;
@@ -215,9 +234,19 @@ mysql> SHOW TABLES;
 7 rows in set (0.01 sec)
 ```
 
-データを入力する  
-```mysql -u myuser -pmypassword internet_tv < channel_table.sql ```  
-もしくは  
+</p>
+</details>
+
+<details>
+<summary>4. テーブルにデータを入れる</summary>
+<p>
+
+テーブルごと.sqlファイルを作成し、データを入れる  
+（.sqlファイルと同じディレクトリで実行する）
+
+mysqlの外から実行  
+```mysql -u myuser -p internet_tv < channel_table.sql ```  
+mysqlの中から実行  
 ```source channel_table.sql```
 ```sql
 source channel_table.sql
@@ -233,8 +262,8 @@ mysql> select * from channel_table;
 | channel_id | channel_name      |
 +------------+-------------------+
 |          8 | BS11              |
-|          2 | NHK教育           |
-|          1 | NHK総合           |
+|          2 | NHK教育            |
+|          1 | NHK総合            |
 |          5 | TBSテレビ          |
 |          9 | WOWOWプライム      |
 |         10 | スカパー！         |
@@ -246,12 +275,14 @@ mysql> select * from channel_table;
 10 rows in set (0.00 sec)
 ```
 
-<!-- 外部キー制約を無効化してデータを入力した後に、再度外部キー制約を有効化することを忘れずに行う必要があります。 -->
-<!-- 無効化 -->
-<!-- SET FOREIGN_KEY_CHECKS=0; -->
-<!-- 有効化 -->
-<!-- SET FOREIGN_KEY_CHECKS=1; -->
+外部キー制約でデータが入力できない場合は一時的に外部キー制約を無効化して実行する。  
+データを入力した後に、再度外部キー制約を有効化することを忘れずに行う。  
+無効化  
+```SET FOREIGN_KEY_CHECKS=0;```  
+有効化  
+```SET FOREIGN_KEY_CHECKS=1;```  
 
+外部キー制約の確認  
 ```sql
 mysql> SHOW VARIABLES LIKE 'FOREIGN_KEY_CHECKS';
 +--------------------+-------+
@@ -261,3 +292,96 @@ mysql> SHOW VARIABLES LIKE 'FOREIGN_KEY_CHECKS';
 +--------------------+-------+
 1 row in set (0.03 sec)
 ```
+
+</p>
+</details>
+
+## ステップ3:データを抽出するクエリ
+
+<details>
+<summary>1. エピソード視聴数トップ3のエピソードタイトルと視聴数を取得する</summary>
+<p>
+
+```sql
+SELECT episode_title, views 
+FROM episode_table 
+ORDER BY views DESC 
+LIMIT 3;
+```
+
+</p>
+</details>
+
+<details>
+<summary>2. エピソード視聴数トップ3の番組タイトル、シーズン数、エピソード数、エピソードタイトル、視聴数を取得する</summary>
+<p>
+
+```sql
+SELECT program_title, season_number, episode_number, episode_title, views
+FROM episode_table
+INNER JOIN season_table
+ON episode_table.season_id = season_table.season_id
+INNER JOIN program_table
+ON episode_table.program_id = program_table.program_id
+ORDER BY views DESC
+LIMIT 3;
+```
+
+</p>
+</details>
+
+<details>
+<summary>3. 本日放送される全ての番組に対して、チャンネル名、放送開始時刻(日付+時間)、放送終了時刻、シーズン数、エピソード数、エピソードタイトル、エピソード詳細を取得する。なお、番組の開始時刻が本日のものを本日方法される番組とみなすものとします</summary>
+<p>
+
+```sql
+SELECT
+  channel_table.channel_name,
+  CONCAT(CURDATE(), ' ', time_slot_table.start_time) AS broadcast_start_time,
+  time_slot_table.end_time AS broadcast_end_time,
+  season_table.season_number,
+  episode_table.episode_number,
+  episode_table.episode_title,
+  episode_table.episode_description
+FROM time_slot_table
+JOIN channel_table 
+ON time_slot_table.channel_id = channel_table.channel_id
+JOIN episode_table 
+ON time_slot_table.start_time >= CURDATE() AND time_slot_table.start_time < DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+JOIN program_table 
+ON episode_table.program_id = program_table.program_id
+LEFT JOIN season_table 
+ON episode_table.season_id = season_table.season_id
+WHERE DATE(episode_table.release_date) = CURDATE()
+ORDER BY channel_table.channel_name, time_slot_table.start_time;
+```
+
+</p>
+</details>
+
+<details>
+<summary>4. ドラマのチャンネルに対して、放送開始時刻、放送終了時刻、シーズン数、エピソード数、エピソードタイトル、エピソード詳細を本日から一週間分取得する</summary>
+<p>
+
+```sql
+SELECT
+  channel_table.channel_name,
+  CONCAT(DATE(episode_table.release_date), ' ', time_slot_table.start_time) AS broadcast_start_time,
+  CONCAT(DATE(episode_table.release_date), ' ', time_slot_table.end_time) AS broadcast_end_time,
+  season_table.season_number,
+  episode_table.episode_number,
+  episode_table.episode_title,
+  episode_table.episode_description
+FROM time_slot_table
+JOIN channel_table 
+ON time_slot_table.channel_id = channel_table.channel_id
+JOIN episode_table ON time_slot_table.start_time >= CURDATE() AND time_slot_table.start_time < DATE_ADD(CURDATE(), INTERVAL 1 WEEK)
+JOIN program_table ON episode_table.program_id = program_table.program_id
+LEFT JOIN season_table ON episode_table.season_id = season_table.season_id
+WHERE channel_table.channel_name = 'ドラマ'
+  AND DATE(episode_table.release_date) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 WEEK)
+ORDER BY episode_table.release_date, time_slot_table.start_time;
+```
+
+</p>
+</details>

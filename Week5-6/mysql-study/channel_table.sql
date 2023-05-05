@@ -1,4 +1,5 @@
 INSERT INTO channel_table (channel_name) VALUES
+('ドラマ'),
 ('NHK総合'),
 ('NHK教育'),
 ('日本テレビ'),
