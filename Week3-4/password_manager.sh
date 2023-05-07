@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Dockerを再起動したときに1度だけ実行する
-# gpg --import ./keys/public-key.gpg
-# gpg --import ./keys/private-key.gpg
-
 echo "パスワードマネージャーへようこそ！"
 
 #  ホスト側の環境変数をコンテナ側に渡す
