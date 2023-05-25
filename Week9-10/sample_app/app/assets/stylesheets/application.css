@@ -13,3 +13,6 @@
  *= require_tree .
  *= require_self
  */
+
+/* style.cssの読み込み */
+@import "style";
