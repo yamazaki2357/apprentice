@@ -8,34 +8,34 @@ console.log('Hello World');
 
 // console.log(sum + difference);
 
-function greet(name) {
-  console.log(`Hello, ${name}!`);
-}
+// function greet(name) {
+//   console.log(`Hello, ${name}!`);
+// }
 
-greet("Hikaru");
+// greet("Hikaru");
 
-function checkTemperature(t) {
-  if (t >= 30) {
-    console.log("Hot");
-  } else if (t >= 15) {
-    console.log("Warm");
-  } else {
-    console.log("Cold");
-  }
-}
+// function checkTemperature(t) {
+//   if (t >= 30) {
+//     console.log("Hot");
+//   } else if (t >= 15) {
+//     console.log("Warm");
+//   } else {
+//     console.log("Cold");
+//   }
+// }
 
-checkTemperature(30)
-checkTemperature(15)
-checkTemperature(14)
-checkTemperature(18)
+// checkTemperature(30)
+// checkTemperature(15)
+// checkTemperature(14)
+// checkTemperature(18)
 
-function checkOddOrEven(n) {
-  if (n % 2 === 0) {
-    console.log("Even");
-  } else {
-    console.log("Odd");
-  }
-}
+// function checkOddOrEven(n) {
+//   if (n % 2 === 0) {
+//     console.log("Even");
+//   } else {
+//     console.log("Odd");
+//   }
+// }
 
-checkOddOrEven(2)
-checkOddOrEven(1)
+// checkOddOrEven(2)
+// checkOddOrEven(1)
