@@ -1,0 +1,10 @@
+<%= form_with(model: @todo, local: true) do |form| %>
+  <div class="field">
+
+    <%= form.text_field :title, placeholder: "タスクを入力する" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "保存する" %>
+  </div>
+<% end %>
