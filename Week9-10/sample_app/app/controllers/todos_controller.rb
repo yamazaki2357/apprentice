@@ -1,41 +1,36 @@
 class TodosController < ApplicationController
-  before_action :set_todo, only: [:show, :edit, :update, :destroy]
+  before_action :set_todo, only: [:show, :update, :destroy]
 
   def index
-    @todos = Todo.all
+    todos = Todo.all
+    render json: todos
   end
 
   def show
-  end
-
-  def new
-    @todo = Todo.new
-  end
-
-  def edit
+    render json: @todo
   end
 
   def create
     @todo = Todo.new(todo_params)
 
     if @todo.save
-      redirect_to todos_path, notice: "Todo was successfully created."
+      render json: @todo, status: :created
     else
-      render :new
+      render json: @todo.errors, status: :unprocessable_entity
     end
   end
 
   def update
     if @todo.update(todo_params)
-      redirect_to todos_path, notice: "Todo was successfully updated."
+      render json: @todo
     else
-      render :edit
+      render json: @todo.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
     @todo.destroy
-    redirect_to todos_url, notice: "Todo was successfully destroyed."
+    head :no_content
   end
 
   private
